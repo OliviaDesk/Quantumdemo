@@ -163,12 +163,14 @@
             background: rgba(10, 2, 31, 0.95);
             border-radius: 12px;
             padding: 30px;
-            width: 320px; /* Smaller width */
+            width: 350px; /* Slightly wider for more fields */
             border: 1px solid var(--secondary);
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
             position: relative;
             transform: scale(0.9);
             transition: transform 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .signup-modal.active .signup-content {
@@ -205,7 +207,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
             border-radius: 6px;
@@ -222,8 +224,23 @@
             display: none;
         }
 
-        .form-group.error input {
+        .form-group.error input, .form-group.error select {
             border-color: #ff4d4d;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        .checkbox-group label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .signup-btn {
@@ -1004,14 +1021,73 @@
             <div class="signup-form" id="signupForm">
                 <h2>GET YOUR $50 BONUS</h2>
                 <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" placeholder="John Doe" required>
+                    <div class="error-message" id="fullnameError">Please enter your full name</div>
+                </div>
+                <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" placeholder="your@email.com" required>
                     <div class="error-message" id="emailError">Please enter a valid email address</div>
                 </div>
                 <div class="form-group">
-                    <label for="wallet">Crypto Wallet</label>
-                    <input type="text" id="wallet" placeholder="0x..." required>
-                    <div class="error-message" id="walletError">Please enter a valid wallet address</div>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="cryptoking123" required>
+                    <div class="error-message" id="usernameError">Please choose a username</div>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" required>
+                        <option value="">Select Country</option>
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="IN">India</option>
+                        <option value="BR">Brazil</option>
+                        <option value="NG">Nigeria</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="KE">Kenya</option>
+                        <option value="GH">Ghana</option>
+                        <option value="ET">Ethiopia</option>
+                        <option value="TZ">Tanzania</option>
+                        <option value="UG">Uganda</option>
+                        <option value="ZW">Zimbabwe</option>
+                        <option value="ZM">Zambia</option>
+                        <option value="MW">Malawi</option>
+                        <option value="RW">Rwanda</option>
+                        <option value="BW">Botswana</option>
+                        <option value="NA">Namibia</option>
+                        <option value="MZ">Mozambique</option>
+                        <option value="AO">Angola</option>
+                        <option value="CM">Cameroon</option>
+                        <option value="CI">Côte d'Ivoire</option>
+                        <option value="SN">Senegal</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error-message" id="countryError">Please select your country</div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+1234567890" required>
+                    <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <div class="error-message" id="passwordError">Password must be at least 8 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                    <div class="error-message" id="confirmPasswordError">Passwords don't match</div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">I agree with the privacy policy and terms of service</label>
                 </div>
                 <button class="signup-btn" id="submitSignup">CLAIM MY $50</button>
             </div>
@@ -1260,38 +1336,77 @@ Join now and experience the fastest, most rewarding platform in crypto.
             return re.test(email);
         }
 
-        function validateWallet(wallet) {
-            // Basic validation for crypto wallet addresses
-            return wallet.length >= 10 && (wallet.startsWith('0x') || wallet.startsWith('1') || wallet.startsWith('3'));
+        function validatePhone(phone) {
+            // Basic phone validation
+            return phone.length >= 8;
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
         }
 
         // Form submission
         document.getElementById('submitSignup').addEventListener('click', function() {
+            const fullname = document.getElementById('fullname').value.trim();
             const email = document.getElementById('email').value.trim();
-            const wallet = document.getElementById('wallet').value.trim();
-            const emailError = document.getElementById('emailError');
-            const walletError = document.getElementById('walletError');
-            const emailGroup = document.getElementById('email').parentElement;
-            const walletGroup = document.getElementById('wallet').parentElement;
+            const username = document.getElementById('username').value.trim();
+            const country = document.getElementById('country').value;
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
             
             // Reset errors
-            emailError.style.display = 'none';
-            walletError.style.display = 'none';
-            emailGroup.classList.remove('error');
-            walletGroup.classList.remove('error');
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
             
             // Validate inputs
             let isValid = true;
             
-            if (!email || !validateEmail(email)) {
-                emailError.style.display = 'block';
-                emailGroup.classList.add('error');
+            if (!fullname) {
+                document.getElementById('fullnameError').style.display = 'block';
+                document.getElementById('fullname').parentElement.classList.add('error');
                 isValid = false;
             }
             
-            if (!wallet || !validateWallet(wallet)) {
-                walletError.style.display = 'block';
-                walletGroup.classList.add('error');
+            if (!email || !validateEmail(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                document.getElementById('email').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!username) {
+                document.getElementById('usernameError').style.display = 'block';
+                document.getElementById('username').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!country) {
+                document.getElementById('countryError').style.display = 'block';
+                document.getElementById('country').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!phone || !validatePhone(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                document.getElementById('phone').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!password || !validatePassword(password)) {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('password').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                document.getElementById('confirmPassword').parentElement.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!agreeTerms) {
+                alert('You must agree to the privacy policy and terms of service');
                 isValid = false;
             }
             
@@ -1406,8 +1521,14 @@ Join now and experience the fastest, most rewarding platform in crypto.
             document.getElementById('closeModal').addEventListener('click', function() {
                 document.getElementById('signupForm').style.display = 'block';
                 document.getElementById('congratsMessage').style.display = 'none';
+                document.getElementById('fullname').value = '';
                 document.getElementById('email').value = '';
-                document.getElementById('wallet').value = '';
+                document.getElementById('username').value = '';
+                document.getElementById('country').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('agreeTerms').checked = false;
                 document.getElementById('submitSignup').disabled = false;
                 document.getElementById('submitSignup').textContent = 'CLAIM MY $50';
             });
