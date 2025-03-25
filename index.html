@@ -195,6 +195,7 @@
 
         .form-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         .form-group label {
@@ -214,6 +215,17 @@
             font-family: 'Kanit', sans-serif;
         }
 
+        .form-group .error-message {
+            color: #ff4d4d;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error input {
+            border-color: #ff4d4d;
+        }
+
         .signup-btn {
             width: 100%;
             background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -230,6 +242,13 @@
         .signup-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px var(--accent-glow);
+        }
+
+        .signup-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .congrats-message {
@@ -987,10 +1006,12 @@
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" placeholder="your@email.com" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
                 </div>
                 <div class="form-group">
                     <label for="wallet">Crypto Wallet</label>
                     <input type="text" id="wallet" placeholder="0x..." required>
+                    <div class="error-message" id="walletError">Please enter a valid wallet address</div>
                 </div>
                 <button class="signup-btn" id="submitSignup">CLAIM MY $50</button>
             </div>
@@ -999,7 +1020,7 @@
                 <h3>CONGRATULATIONS!</h3>
                 <p>Your account has been created!</p>
                 <div class="bonus-amount">$50 BONUS ADDED</div>
-                <p>Redirecting to dashboard...</p>
+                <p>Wait while we redirect you to dashboard...</p>
             </div>
         </div>
     </div>
@@ -1233,38 +1254,81 @@ Join now and experience the fastest, most rewarding platform in crypto.
             if (e.target === this) hideSignupModal();
         });
 
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateWallet(wallet) {
+            // Basic validation for crypto wallet addresses
+            return wallet.length >= 10 && (wallet.startsWith('0x') || wallet.startsWith('1') || wallet.startsWith('3'));
+        }
+
         // Form submission
         document.getElementById('submitSignup').addEventListener('click', function() {
-            const email = document.getElementById('email').value;
-            const wallet = document.getElementById('wallet').value;
+            const email = document.getElementById('email').value.trim();
+            const wallet = document.getElementById('wallet').value.trim();
+            const emailError = document.getElementById('emailError');
+            const walletError = document.getElementById('walletError');
+            const emailGroup = document.getElementById('email').parentElement;
+            const walletGroup = document.getElementById('wallet').parentElement;
             
-            if (!email || !wallet) {
-                alert('Please fill in all fields');
+            // Reset errors
+            emailError.style.display = 'none';
+            walletError.style.display = 'none';
+            emailGroup.classList.remove('error');
+            walletGroup.classList.remove('error');
+            
+            // Validate inputs
+            let isValid = true;
+            
+            if (!email || !validateEmail(email)) {
+                emailError.style.display = 'block';
+                emailGroup.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!wallet || !validateWallet(wallet)) {
+                walletError.style.display = 'block';
+                walletGroup.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) {
                 return;
             }
             
-            // Show congrats message
-            document.getElementById('signupForm').style.display = 'none';
-            document.getElementById('congratsMessage').style.display = 'block';
+            // Disable button during processing
+            const submitBtn = document.getElementById('submitSignup');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
             
-            // Redirect after 3 seconds
+            // Simulate API call
             setTimeout(() => {
-                const loader = document.getElementById('quantumLoader');
-                const progressBar = document.getElementById('loaderProgress');
+                // Show congrats message
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('congratsMessage').style.display = 'block';
                 
-                loader.classList.add('active');
-                
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 2;
-                    progressBar.style.width = `${progress}%`;
+                // Redirect after 5 seconds
+                setTimeout(() => {
+                    const loader = document.getElementById('quantumLoader');
+                    const progressBar = document.getElementById('loaderProgress');
                     
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        window.location.href = "multiply.html";
-                    }
-                }, 30);
-            }, 3000);
+                    loader.classList.add('active');
+                    
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 2;
+                        progressBar.style.width = `${progress}%`;
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            window.location.href = "multiply.html";
+                        }
+                    }, 30);
+                }, 3000);
+            }, 1500);
         });
 
         // ===== ANIMATED COUNTER =====
@@ -1337,6 +1401,16 @@ Join now and experience the fastest, most rewarding platform in crypto.
             }
             window.addEventListener('resize', checkResponsive);
             checkResponsive();
+            
+            // Reset form when modal is closed
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('congratsMessage').style.display = 'none';
+                document.getElementById('email').value = '';
+                document.getElementById('wallet').value = '';
+                document.getElementById('submitSignup').disabled = false;
+                document.getElementById('submitSignup').textContent = 'CLAIM MY $50';
+            });
         };
     </script>
 </body>
