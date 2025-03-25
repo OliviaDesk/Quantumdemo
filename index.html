@@ -136,6 +136,126 @@
             transition: width 0.3s;
         }
 
+        /* ===== SMALL SIGNUP MODAL ===== */
+        .signup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 1, 18, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .signup-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .signup-content {
+            background: rgba(10, 2, 31, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            width: 320px; /* Smaller width */
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .signup-modal.active .signup-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .signup-content h2 {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .signup-btn {
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--accent-glow);
+        }
+
+        .congrats-message {
+            text-align: center;
+            display: none;
+        }
+
+        .congrats-message h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .congrats-message p {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .bonus-amount {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 15px 0;
+            animation: pulse 1s infinite alternate;
+        }
+
         /* ===== COMPACT FUTURISTIC HEADER ===== */
         header {
             display: flex;
@@ -835,6 +955,12 @@
             .support-section {
                 padding: 30px 20px;
             }
+
+            .signup-content {
+                width: 90%;
+                max-width: 300px;
+                padding: 25px;
+            }
         }
     </style>
 </head>
@@ -851,6 +977,33 @@
         </div>
     </div>
 
+    <!-- Signup Modal (Smaller Version) -->
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <div class="signup-form" id="signupForm">
+                <h2>GET YOUR $50 BONUS</h2>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="wallet">Crypto Wallet</label>
+                    <input type="text" id="wallet" placeholder="0x..." required>
+                </div>
+                <button class="signup-btn" id="submitSignup">CLAIM MY $50</button>
+            </div>
+            
+            <div class="congrats-message" id="congratsMessage">
+                <h3>CONGRATULATIONS!</h3>
+                <p>Your account has been created!</p>
+                <div class="bonus-amount">$50 BONUS ADDED</div>
+                <p>Redirecting to dashboard...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating particles -->
     <div id="particles-container"></div>
 
@@ -861,7 +1014,7 @@
             <a href="#" class="nav-item active">Home</a>
             <a href="#" class="nav-item">How It Works</a>
             <a href="#" class="nav-item">Team</a>
-            <a href="javascript:void(0)" onclick="navigateToMultiplier()" class="nav-item">10X Now</a>
+            <a href="javascript:void(0)" onclick="showSignupModal()" class="nav-item">10X Now</a>
         </nav>
         <button class="mobile-menu-btn">≡</button>
     </header>
@@ -871,7 +1024,7 @@
         <section class="hero">
             <h1>INSTANT 10X CRYPTO MULTIPLIER</h1>
             <p>Harness quantum blockchain technology to multiply your deposits instantly. Backed by "very real" math and "totally legit" algorithms.</p>
-            <a href="javascript:void(0)" onclick="navigateToMultiplier()" class="cta-button">GET 10X NOW</a>
+            <a href="javascript:void(0)" onclick="showSignupModal()" class="cta-button">GET 10X NOW</a>
             
             <div class="live-ticker">
                 <span>⚡ LIVE:</span>
@@ -1063,53 +1216,65 @@ Join now and experience the fastest, most rewarding platform in crypto.
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <script>
-        // ===== LOADER FUNCTIONALITY =====
-        function navigateToMultiplier() {
-            const loader = document.getElementById('quantumLoader');
-            const progressBar = document.getElementById('loaderProgress');
-            
-            // Show loader
-            loader.classList.add('active');
-            
-            // Animate progress bar
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 2;
-                progressBar.style.width = `${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    window.location.href = "multiply.html";
-                }
-            }, 30);
+        // ===== MODAL FUNCTIONALITY =====
+        function showSignupModal() {
+            document.getElementById('signupModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Enhanced particle system
-        function createParticles() {
-            const coins = ['₿', 'Ξ', '🜚', '◎', '⟠', '⧫'];
-            const container = document.getElementById('particles-container');
+        function hideSignupModal() {
+            document.getElementById('signupModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', hideSignupModal);
+        document.getElementById('signupModal').addEventListener('click', function(e) {
+            if (e.target === this) hideSignupModal();
+        });
+
+        // Form submission
+        document.getElementById('submitSignup').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const wallet = document.getElementById('wallet').value;
             
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'crypto-particle';
-                particle.textContent = coins[Math.floor(Math.random() * coins.length)];
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * 100 + 'vh';
-                particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(particle);
+            if (!email || !wallet) {
+                alert('Please fill in all fields');
+                return;
             }
-        }
+            
+            // Show congrats message
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('congratsMessage').style.display = 'block';
+            
+            // Redirect after 3 seconds
+            setTimeout(() => {
+                const loader = document.getElementById('quantumLoader');
+                const progressBar = document.getElementById('loaderProgress');
+                
+                loader.classList.add('active');
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        window.location.href = "multiply.html";
+                    }
+                }, 30);
+            }, 3000);
+        });
 
-        // Animated counter
+        // ===== ANIMATED COUNTER =====
         let count = 18742;
         setInterval(() => {
             count += Math.floor(Math.random() * 15);
             document.getElementById('depositCounter').innerText = count.toLocaleString();
         }, 1500);
 
-        // Countdown timer
+        // ===== COUNTDOWN TIMER =====
         let time = 86399;
         const timer = setInterval(() => {
             time--;
@@ -1121,7 +1286,7 @@ Join now and experience the fastest, most rewarding platform in crypto.
             if (time <= 0) clearInterval(timer);
         }, 1000);
 
-        // Mobile menu toggle
+        // ===== MOBILE MENU TOGGLE =====
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const nav = document.querySelector('.nav');
 
@@ -1131,14 +1296,12 @@ Join now and experience the fastest, most rewarding platform in crypto.
             mobileMenuBtn.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
         });
 
-        // Transactions feed
+        // ===== TRANSACTIONS FEED =====
         function generateTransactions() {
             const transactions = [
                 { coin: 'BTC', amount: '0.42', address: '3FZb...29v' },
                 { coin: 'ETH', amount: '12.5', address: '0x71C...3d4' },
-                { coin: 'USDT', amount: '5000', address: 'TXYZ...7f1' },
-                { coin: 'BTC', amount: '1.25', address: 'bc1q...8g2' },
-                { coin: 'ETH', amount: '7.8', address: '0xDA2...5h6' }
+                { coin: 'USDT', amount: '5000', address: 'TXYZ...7f1' }
             ];
 
             const container = document.getElementById('liveTransactions');
@@ -1160,24 +1323,11 @@ Join now and experience the fastest, most rewarding platform in crypto.
             container.innerHTML += container.innerHTML;
         }
 
-        // Header scroll effect
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 30) {
-                header.style.padding = "6px 0";
-                header.style.background = "rgba(5, 1, 18, 0.98)";
-            } else {
-                header.style.padding = "10px 0";
-                header.style.background = "rgba(10, 2, 31, 0.97)";
-            }
-        });
-
-        // Initialize everything
+        // ===== INITIALIZE =====
         window.onload = function() {
-            createParticles();
             generateTransactions();
             
-            // Responsive check
+            // Responsive menu
             function checkResponsive() {
                 if (window.innerWidth <= 768) {
                     nav.style.display = 'none';
@@ -1185,7 +1335,6 @@ Join now and experience the fastest, most rewarding platform in crypto.
                     nav.style.display = 'flex';
                 }
             }
-
             window.addEventListener('resize', checkResponsive);
             checkResponsive();
         };
